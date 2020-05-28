@@ -6,7 +6,7 @@
 
 </template>
 <script>
-import {bus} from '../main'
+
 export default {
     name:'Header',
     data(){
@@ -14,27 +14,6 @@ export default {
             titre:'Mon titre de base'
         }
     },
-    beforeCreate(){
-        console.log('Il va etre crée !')
-    },
-    created(){
-        console.log('Le composant est crée')
-        bus.$on('changeTitre',(data) => {
-            this.titre = data
-        })
-    },
-    beforeMount(){
-        console.log('Il va etre monté dans le DOM')
-    },
-    mounted(){
-        console.log('Il est intégré dans le DOM')
-    },
-    beforeUpdate(){
-        console.log('Il va se mettre a jour')
-    },
-    updated(){
-        console.log("Le composant s'est mis a jour")
-    }
 }
 
 </script>

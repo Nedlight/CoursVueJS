@@ -1,63 +1,92 @@
 <template>
+
     <div class="container mt-5">
 
-        <h1>{{ titre }}</h1>
+        <h1>Notre premier formulaire</h1>
+        <form action="">
 
-    <div class="btn btn-outline-primary mr-2" v-on:click="component='Texte1'">Onglet 1</div>
-    <div class="btn btn-outline-primary" v-on:click="component='Texte2'">Onglet 2</div>
+            <div class="form-group">
+                <label for="prenom">Ton prenom</label>
+                <input v-model="formData.prenom" type="text" id="prenom" class="form-control">
+            </div>
 
-    <div class="onglets card mb-5">
-        <component class="p-5" v-bind:is="component"></component>
-    </div>
-    <modale v-bind:revele="revele" v-bind:toggleModale="toggleModale"></modale>
+            <div class="form-group">
+                <label for="txt">Ton texte</label>
+                <textarea v-model="formData.txt" class="form-control" id="txt"></textarea>
+            </div>
+
+            <h3>Selectbox</h3>
+
+            <select v-model="formData.select">
+                <option v-bind:key="index" v-for="(pays, index) in formData.listePays">{{ pays }}</option>
+            </select>
+
+            
+            <h3 class="mt-3">Checkbox</h3>
+
+            <div class="form-check">
+                <input v-model="formData.checkFruits" value="fraise" id="fraise" type="checkbox" class="form-check-input">
+                <label for="fraise">Fraise</label>
+            </div>
+
+            <div class="form-check">
+                <input v-model="formData.checkFruits" value="pomme" id="pomme" type="checkbox" class="form-check-input">
+                <label for="pomme">Pomme</label>
+            </div>
+
+            <div class="form-check">
+                <input v-model="formData.checkFruits" value="cerise" id="cerise" type="checkbox" class="form-check-input">
+                <label for="cerise">Cerise</label>
+            </div>
 
 
+        <button v-on:click.prevent="envoiForm" class="btn btn-primary mt-3">Envoyer les données</button>
 
-    <div v-on:click="toggleModale" class="btn btn-success">Ouvrir le modal</div>
+        </form>
+
+        <br>
+
+        <div v-if="infoSubmit">
+
+
+            <h2>Résultats</h2>
+
+            <div class="card p-3">
+                <p>Prénom : {{ formData.prenom }}</p>
+                <p style="white-space: pre">Texte : {{ formData.txt }}</p>
+
+                <p>Résultat checkbox</p>
+                <ul>
+                    <li v-bind:key="index" v-for="(fruit, index) in formData.checkFruits">{{ fruit }}</li>
+                </ul>
+
+                <p>Choix du select : {{ formData.select }}</p>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 
-    import Texte1 from './Texte1'
-    import Texte2 from './Texte2'
-    import modale from './Modal'
 
     export default{
         name:'contenue',
-        data: function(){
+        data(){
             return{
-                myArr : [
-                    {titre : 'Inception', date : 2010},
-                    {titre : 'Avatar', date : 2009},
-                    {titre : 'Seven', date : 1995}
-                ],
-                txt: 'Hello world',
-                titre : 'Je suis le titre',
-                toggle1:true,
-                toggle2:false,
-                component: "Texte1",
-                revele : false
+                formData: {
+                    prenom:'',
+                    txt:'',
+                    checkFruits:[],
+                    select:'',
+                    listePays:['Kanto','Jhoto','Hoenn','Sinnoh','Unys'],
+                },
+                infoSubmit:false
             }
         },
         methods:{
-            toggleOng1:function(){
-                this.toggle1=true
-                this.toggle2=false
-            },
-
-            toggleOng2:function(){
-                this.toggle1=false
-                this.toggle2=true
-            },
-            toggleModale:function(){
-                this.revele= !this.revele
+            envoiForm: function(){
+                this.infoSubmit = true;
             }
-        },
-        components:{
-            'Texte1': Texte1,
-            'Texte2': Texte2,
-            'modale' : modale
         }
     }
 </script>
@@ -68,4 +97,4 @@ h1{
     margin-top: 100px!important;
 }
 
-</style>
+</style> 
